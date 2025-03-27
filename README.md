@@ -33,6 +33,7 @@ pip install -r requirements.txt
 pip install playwright
 pip install pytest
 pip install pytest-playwright
+pip install pytest-html
 ```
 
 4. Install Playwright browsers:
