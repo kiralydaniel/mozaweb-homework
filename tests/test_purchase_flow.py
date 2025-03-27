@@ -29,8 +29,12 @@ def test_purchase_flow(page: Page):
     shopping_page.add_most_expensive_to_cart()
     shopping_page.go_to_checkout()
 
+    # Confirm order and extract order number
     checkout_page.confirm_order()
     checkout_page.is_order_successful()
     order_number = checkout_page.extract_order_number()
 
+    # Navigate to order history and verify order number
+    profile_page.navigate_to_order_history()
+    profile_page.verify_order_id(order_number)
 
