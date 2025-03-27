@@ -1,4 +1,5 @@
 from .base_page import BasePage
+from playwright.sync_api import expect
 
 class ShoppingPage(BasePage):
     def __init__(self, page):
@@ -12,6 +13,7 @@ class ShoppingPage(BasePage):
         self.out_of_stock_label = page.locator("span.nostock")
         self.add_to_cart_button = page.locator("#product a.cart")
         self.cart_checkout_button = page.locator("#cart_checkout1")
+        self.cart_items_element = page.get_by_role("link", name="Items - $")
 
     def navigate_to_shirts(self):
         self.apparel_menu.hover()
@@ -66,6 +68,7 @@ class ShoppingPage(BasePage):
             if added_count == num_items:
                 break
 
-    def go_to_checkout(self):
+    def go_to_checkout(self, num_items=2):
+        expect(self.cart_items_element).to_contain_text(f"{num_items} Items")
         self.cart_checkout_button.click()
         self.page.wait_for_load_state("networkidle")
